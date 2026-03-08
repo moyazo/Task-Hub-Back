@@ -1,0 +1,51 @@
+{
+    "name": "smartsportbackend",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "repository": "https://github.com/moyazo/SmartSport_Backend.git",
+    "author": "Manuel Moya Vadillo <manuel.moyavadillo2@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "start": "nodemon index.ts  .",
+        "startdb": "docker-compose up",
+        "stopdb": "docker compose down",
+        "prettier": "prettier --write .",
+        "migrate": "sequelize-cli db:migrate",
+        "undo": "yarn sequelize-cli db:migrate:undo:all"
+    },
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "compression": "^1.8.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.0",
+        "express": "^5.1.0",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "path": "^0.12.7",
+        "pg": "^8.16.3",
+        "pg-hstore": "^2.3.4",
+        "prettier": "^3.6.2",
+        "reflect-metadata": "^0.2.2",
+        "sequelize": "^6.37.7",
+        "sequelize-cli": "^6.6.3",
+        "sequelize-typescript": "^2.1.6",
+        "uuid": "^13.0.0",
+        "winston": "^3.17.0"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
+        "@types/compression": "^1.8.1",
+        "@types/cookie-parser": "^1.4.9",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/node": "^25.3.5",
+        "@types/sequelize": "^6.12.0",
+        "@types/uuid": "^11.0.0",
+        "@types/validator": "^13.15.2",
+        "nodemon": "^3.1.10",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    }
+}

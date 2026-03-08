@@ -1,0 +1,14 @@
+services:
+    db:
+        container_name: 'smartsportdb'
+        image: postgres:alpine
+        environment:
+            POSTGRES_USER: smartsportadmin
+            POSTGRES_DB: smartsportdb
+            POSTGRES_PASSWORD: smartsport
+        ports:
+            - 5432:5432
+        volumes:
+            - db-data:/var/lib/postgresql/data
+volumes:
+    db-data:

@@ -1,0 +1,42 @@
+# 1. Build stage para obtener Node y Yarn
+FROM node:14.15.3-slim AS build
+
+# 2. Imagen base final
+FROM ubuntu:20.04 AS final
+
+# Variables de entorno para no interactivo
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 3. Copiar binarios de node y yarn
+COPY --from=build /usr/local/bin/node /usr/local/bin/node
+COPY --from=build /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=build /usr/local/bin/npm /usr/local/bin/npm
+COPY --from=build /usr/local/bin/npx /usr/local/bin/npx
+
+# 4. Wait-for-it helper
+ARG WAIT_URL="https://raw.githubusercontent.com/vishnubob/wait-for-it/81b1373f17855a4dc21156cfe1694c31d7d1792e/wait-for-it.sh"
+ADD "${WAIT_URL}" /usr/local/bin/wait-for-it
+RUN chmod +x /usr/local/bin/wait-for-it
+
+# 5. Instalación limpia de dependencias necesarias
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
+# 6. Crear usuario sin privilegios
+RUN groupadd -g 1000 tasks \
+  && useradd -m -u 1000 -g tasks tasks
+
+WORKDIR /app
+USER tasks
+
+# 7. Copiar e instalar dependencias con Yarn
+COPY --chown=tasks:tasks package.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production \
+  && yarn cache clean
+
+# 8. Copiar código fuente
+COPY --chown=tasks:tasks src/ ./src/
+
+# 9. Definir comando de inicio
+CMD ["yarn", "start"]
