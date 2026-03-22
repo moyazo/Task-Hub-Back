@@ -1,7 +1,7 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
 export async function up(queryInterface: QueryInterface) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('ambits', {
         id: {
             type: DataTypes.UUID,
             allowNull: false,
@@ -12,29 +12,6 @@ export async function up(queryInterface: QueryInterface) {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-
-        role: {
-            type: DataTypes.ENUM('ADMIN', 'USER'),
-            allowNull: false,
-            defaultValue: 'USER',
         },
 
         createdAt: {
@@ -52,8 +29,5 @@ export async function up(queryInterface: QueryInterface) {
 }
 
 export async function down(queryInterface: QueryInterface) {
-    await queryInterface.dropTable('users');
-    await queryInterface.sequelize.query(
-        'DROP TYPE IF EXISTS "enum_users_role";'
-    );
+    await queryInterface.dropTable('ambits');
 }

@@ -1,5 +1,7 @@
 const PORTBACKEND = 8000;
-const URLFRONTEND = 'http://localhost:3000';
+
+const URLFRONTEND = process.env.URLFRONTEND || 'http://localhost:3000';
+
 const INTERNAL_SERVER_ERROR = 500;
 const BAD_REQUEST = 400;
 const NOT_FOUND = 404;
@@ -7,6 +9,7 @@ const INVALID_ACTION = 403;
 const UNAUTHORIZED = 401;
 const CREATED = 201;
 const OK = 200;
+
 const NOT_AUTHORIZED_MESSAGE = 'You are not authorized';
 const INVALID_REQUEST_BODY = 'Invalid request body';
 const FAIL_TO_CREATE = 'Fail to create';
@@ -16,14 +19,23 @@ const SUCCESS_TO_CREATE = 'Created successfully';
 const SUCCESS_TO_MODIFY = 'Modified successfully';
 const SUCCESS_TO_REMOVE = 'Removed successfully';
 const LOGIN_SUCCESS = 'Login successful';
-const UNAUTHENTICATED = 'Unauthenticated: No token provided';
+const UNAUTHENTICATED = 'Unauthenticated';
 const INVALID_TOKEN = 'Invalid token';
 const TOKEN_EXPIRED = 'Token has expired';
 const NOT_FOUND_MESSAGE = 'Not found';
 const INTERNAL_SERVER_ERROR_MESSAGE = 'Internal server error';
+const EMAIL_ALREADY_IN_USE = 'Email already in use';
+const USERNAME_ALREADY_IN_USE = 'Username already in use';
+const INVALID_EMAIL_OR_PASSWORD = 'Invalid email or password';
+const LOGOUT_SUCCESS = 'Logout successful';
+
 const PUBLIC_ROUTES = ['/auth'];
 
 export {
+    EMAIL_ALREADY_IN_USE,
+    USERNAME_ALREADY_IN_USE,
+    INVALID_EMAIL_OR_PASSWORD,
+    LOGOUT_SUCCESS,
     PUBLIC_ROUTES,
     PORTBACKEND,
     URLFRONTEND,

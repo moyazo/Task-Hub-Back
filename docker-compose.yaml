@@ -1,14 +1,32 @@
 services:
-    db:
-        container_name: 'smartsportdb'
-        image: postgres:alpine
-        environment:
-            POSTGRES_USER: smartsportadmin
-            POSTGRES_DB: smartsportdb
-            POSTGRES_PASSWORD: smartsport
+    app:
+        build: .
+        container_name: taskhub_app
         ports:
-            - 5432:5432
+            - '3000:3000'
+        environment:
+            - DATABASE_URL=postgres://taskhub_user:taskhub_pass@db:5432/taskhub_db
+            - NODE_ENV=production
+        depends_on:
+            db:
+                condition: service_healthy # Espera a que la DB esté lista, no solo iniciada
+
+    db:
+        image: postgres:16-alpine # Versión específica estable
+        container_name: taskhub_db
+        environment:
+            POSTGRES_USER: taskhub_user
+            POSTGRES_PASSWORD: taskhub_pass
+            POSTGRES_DB: taskhub_db
+        ports:
+            - '5432:5432'
         volumes:
             - db-data:/var/lib/postgresql/data
+        healthcheck: # Prueba de vida para que la App no falle al arrancar
+            test: ['CMD-SHELL', 'pg_isready -U taskhub_user -d taskhub_db']
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
 volumes:
     db-data:
